@@ -12,13 +12,14 @@ import (
 )
 
 type Session struct {
-	id         string        // session id
-	fresh      bool          // if new session
-	ctx        *fiber.Ctx    // fiber context
-	config     *Store        // store configuration
-	data       *data         // key value data
-	byteBuffer *bytes.Buffer // byte buffer for the en- and decode
-	exp        time.Duration // expiration of this session
+	id               string        // session id
+	fresh            bool          // if new session
+	ctx              *fiber.Ctx    // fiber context
+	config           *Store        // store configuration
+	data             *data         // key value data
+	byteBuffer       *bytes.Buffer // byte buffer for the en- and decode
+	exp              time.Duration // expiration of this session
+	shouldSetSession bool
 }
 
 var sessionPool = sync.Pool{
@@ -138,7 +139,7 @@ func (s *Session) Save() error {
 	}
 
 	// Create session with the session ID if fresh
-	if s.fresh {
+	if s.fresh || s.shouldSetSession {
 		s.setSession()
 	}
 
@@ -174,6 +175,7 @@ func (s *Session) Keys() []string {
 // SetExpiry sets a specific expiration for this session
 func (s *Session) SetExpiry(exp time.Duration) {
 	s.exp = exp
+	s.shouldSetSession = true
 }
 
 func (s *Session) setSession() {
