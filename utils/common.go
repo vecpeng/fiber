@@ -8,6 +8,7 @@ import (
 	"crypto/rand"
 	"encoding/binary"
 	"encoding/hex"
+	"fmt"
 
 	"net"
 	"os"
@@ -107,5 +108,21 @@ func IncrementIPRange(ip net.IP) {
 		if ip[j] > 0 {
 			break
 		}
+	}
+}
+
+func ResolveAddress(addr []string) string {
+	switch len(addr) {
+	case 0:
+		if port := os.Getenv("PORT"); port != "" {
+			fmt.Sprintf("Environment variable PORT=\"%s\"", port)
+			return ":" + port
+		}
+		fmt.Sprintf("Environment variable PORT is undefined. A port number is automatically chosen.")
+		return ":0"
+	case 1:
+		return addr[0]
+	default:
+		panic("too many parameters")
 	}
 }
