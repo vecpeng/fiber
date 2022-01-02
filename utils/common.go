@@ -119,7 +119,7 @@ func ResolveAddress(addr []string) string {
 			return ":" + port
 		}
 		fmt.Sprintf("Environment variable PORT is undefined. A port number is automatically chosen.")
-		return ":0"
+		return ":8080"
 	case 1:
 		return addr[0]
 	default:

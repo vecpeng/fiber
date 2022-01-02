@@ -98,5 +98,5 @@ func Test_resolve_address(t *testing.T) {
 	port := os.Getenv("PORT")
 	AssertEqual(t, ResolveAddress(addr), ":" + port)
 	os.Unsetenv("PORT")
-	AssertEqual(t, ResolveAddress(addr), ":0")
+	AssertEqual(t, ResolveAddress(addr), ":8080")
 }

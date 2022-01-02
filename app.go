@@ -734,7 +734,7 @@ func (app *App) Listener(ln net.Listener) error {
 
 // Listen serves HTTP requests from the given addr.
 // If there is no given address, it will use environment
-// variable or serve at an automatically chosen port.
+// variable or serve at port ":8080" by defautl.
 //
 //  app.Listen()
 //  app.Listen(":8080")
