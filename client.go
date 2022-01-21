@@ -52,6 +52,7 @@ type Args = fasthttp.Args
 // Request argument passed to RetryIfFunc, if there are any request errors.
 // Copy from fasthttp
 type RetryIfFunc = fasthttp.RetryIfFunc
+
 var defaultClient Client
 
 // Client implements http client.
@@ -725,7 +726,7 @@ func (a *Agent) Dest(dest []byte) *Agent {
 // RetryIf controls whether a retry should be attempted after an error.
 //
 // By default, will use isIdempotent function from fasthttp
-func (a *Agent) RetryIf(retryIf fasthttp.RetryIfFunc) *Agent {
+func (a *Agent) RetryIf(retryIf RetryIfFunc) *Agent {
 	a.HostClient.RetryIf = retryIf
 	return a
 }
